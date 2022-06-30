@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class MealTo {
     private final int id;
+
     private final LocalDateTime dateTime;
 
     private final String description;
@@ -42,6 +43,11 @@ public class MealTo {
 
     @Override
     public String toString() {
-        return "MealTo{" + "dateTime=" + dateTime + ", description='" + description + '\'' + ", calories=" + calories + ", excess=" + excess + '}';
+        return "MealTo{" +
+                "dateTime=" + dateTime +
+                ", description='" + description + '\'' +
+                ", calories=" + calories +
+                ", excess=" + excess +
+                '}';
     }
 }

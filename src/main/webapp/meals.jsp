@@ -28,10 +28,10 @@
                 <c:out value="${meal.dateTime.format(dateTimeFormatter)}"/>
             </td>
             <td>
-                ${meal.description}
+                    ${meal.description}
             </td>
             <td>
-                ${meal.calories}
+                    ${meal.calories}
             </td>
             <td><a href="meals?action=edit&id=${meal.id}">Edit</a></td>
             <td><a href="meals?action=delete&id=${meal.id}">Delete</a></td>
