@@ -32,7 +32,7 @@ public class MealRestController {
         return MealsUtil.getTos(service.getAll(userId), MealsUtil.DEFAULT_CALORIES_PER_DAY);
     }
 
-    public Meal get(int i, int id) {
+    public Meal get(int id) {
         log.info("get {}", id);
         return service.get(id, userId);
     }
