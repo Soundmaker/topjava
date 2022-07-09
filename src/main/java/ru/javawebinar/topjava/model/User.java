@@ -80,6 +80,7 @@ public class User extends AbstractNamedEntity {
     public String getPassword() {
         return password;
     }
+
     @Override
     public String toString() {
         return "User{" +
