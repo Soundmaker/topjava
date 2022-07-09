@@ -21,7 +21,6 @@ public class MealRestController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-
     private final MealService service;
 
     public MealRestController(MealService service) {
@@ -38,9 +37,18 @@ public class MealRestController {
         return service.get(id, SecurityUtil.authUserId());
     }
 
+    public List<MealTo> getAllFilterByDateTime(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
+        log.info("getAllFilerByDateTime");
+        return MealsUtil.getFilteredTos(service.getAllFilterByDate(SecurityUtil.authUserId(),
+                        startDate != null ? startDate : LocalDate.MIN
+                        , endDate != null ? endDate : LocalDate.MAX),
+                SecurityUtil.authUserCaloriesPerDay(),
+                startTime != null ? startTime : LocalTime.MIN,
+                endTime != null ? endTime : LocalTime.MAX);
+    }
+
     public Meal create(Meal meal) {
         log.info("create {}", meal);
-        meal.setUserId(SecurityUtil.authUserId());
         checkNew(meal);
         return service.create(meal, SecurityUtil.authUserId());
     }
@@ -55,11 +63,4 @@ public class MealRestController {
         assureIdConsistent(meal, id);
         service.update(meal, SecurityUtil.authUserId());
     }
-
-    public List<MealTo> getAllFilterByDateTime(LocalDate startDate, LocalDate endDate, LocalTime startTime, LocalTime endTime) {
-        log.info("getAllFilerByDateTime");
-        return MealsUtil.getFilteredTos(service.getAllFilterByDate(SecurityUtil.authUserId(), startDate, endDate),
-                SecurityUtil.authUserCaloriesPerDay(), startTime, endTime);
-    }
-
 }
