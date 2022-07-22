@@ -1,9 +1,11 @@
 package ru.javawebinar.topjava.model;
 
+import org.hibernate.validator.constraints.Range;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,7 +14,6 @@ import java.time.LocalTime;
         @NamedQuery(name = Meal.ALL_BY_USER, query = "SELECT m FROM Meal m WHERE m.user.id = ?1 ORDER BY m.dateTime DESC"),
         @NamedQuery(name = Meal.ALL_BETWEEN, query = "SELECT m FROM Meal m WHERE m.user.id = ?1 AND  m.dateTime >= ?2 " +
                 "AND m.dateTime < ?3 ORDER BY m.dateTime DESC"),
-        @NamedQuery(name = Meal.BY_ID, query = "SELECT m FROM Meal m WHERE m.id = ?1 AND m.user.id = ?2"),
         @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id = ?1 AND m.user.id = ?2"),
 })
 
@@ -21,7 +22,6 @@ import java.time.LocalTime;
 public class Meal extends AbstractBaseEntity {
 
     public static final String ALL_BY_USER = "Meal.getAll";
-    public static final String BY_ID = "Meal.get";
     public static final String DELETE = "Meal.delete";
     public static final String ALL_BETWEEN = "Meal.getBetween";
 
@@ -31,10 +31,11 @@ public class Meal extends AbstractBaseEntity {
 
     @Column(name = "description", nullable = false)
     @NotBlank
+    @Size(min = 2, max = 120)
     private String description;
 
     @Column(name = "calories", nullable = false)
-    @Positive
+    @Range(min = 5, max = 5000)
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
